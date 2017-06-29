@@ -28,19 +28,17 @@ class VbotTuLing extends AbstractMessageHandler
         $groups = vbot('groups');
         //TODO 第一次需要@我
         //TODO 如果其他返回消息了，不用机器人！
-        $username = $message['from']['UserName'];
 
         foreach ($groups as $gid => $group) {
+            //check must be 群主
+            if( isset($group['IsOwner']) && !$group['IsOwner']) {
+                continue;
+            }
             //////begin!!//////
             if ($message['type'] === 'text') {
                 $keywords_ingroup = ['群规','关注','名片'];
                 if(!in_array($message['content'], $keywords_ingroup)){
-                    if($message['fromType'] !== 'Self' //自己不回复自己！
-                        && (//不是自己的群，不回复！
-                            (isset($group['IsOwner']) && $group['IsOwner'])
-                            || (isset($message['from']['IsOwner']) && $message['from']['IsOwner'])
-                            )
-                        ){
+                    if($message['fromType'] !== 'Self'){ //自己不回复自己！
                         // if($message['isAt']) {
                         //     //不是@我不回！
                         // }
