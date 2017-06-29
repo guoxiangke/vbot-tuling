@@ -19,8 +19,6 @@ class VbotTuLing extends AbstractMessageHandler
 
     public $zhName = '图灵对话';
     
-    public static $status = true;
-    
     private static $array = [];
 
     public function handler(Collection $message)
@@ -30,6 +28,8 @@ class VbotTuLing extends AbstractMessageHandler
         $groups = vbot('groups');
         //TODO 第一次需要@我
         //TODO 如果其他返回消息了，不用机器人！
+        $username = $message['from']['UserName'];
+
         foreach ($groups as $gid => $group) {
             //////begin!!//////
             if ($message['type'] === 'text') {
@@ -44,12 +44,15 @@ class VbotTuLing extends AbstractMessageHandler
                         // if($message['isAt']) {
                         //     //不是@我不回！
                         // }
+                        // $groupname = $group['NickName'];
+                        // $isBegin = isset(static::$array[$groupname][$username]);
                         //Extension on/info 不要回复！
                         $pattern ='/ (on|off|info)$/';
                         if(!preg_match($pattern, $message['content'])){
                             Text::send($message['from']['UserName'], static::reply($message['pure'], $message['from']['UserName']));
                             return;
                         }
+
                     }
                 }
             }
