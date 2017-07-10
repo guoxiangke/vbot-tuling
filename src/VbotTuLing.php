@@ -20,7 +20,6 @@ class VbotTuLing extends AbstractMessageHandler
     public $zhName = '图灵对话';
     
     private static $array = [];
-    public static $status = false;
 
     public function handler(Collection $message)
     {
